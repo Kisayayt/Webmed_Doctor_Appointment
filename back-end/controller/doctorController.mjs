@@ -23,3 +23,50 @@ export const getDoctorDetails = async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 };
+
+export const getDoctorList = async (req, res) => {
+  try {
+    let { page = 1, limit = 10, search = "", specialty = "" } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const query = {};
+
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { specialty: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (specialty) {
+      query.specialty = specialty;
+    }
+
+    const doctors = await doctorModel
+      .find(query)
+      .select("-password")
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    const totalDoctors = await doctorModel.countDocuments(query);
+
+    res.json({
+      totalDoctors,
+      totalPages: Math.ceil(totalDoctors / limit),
+      currentPage: page,
+      doctors,
+    });
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};
+
+export const getSpecialties = async (req, res) => {
+  try {
+    const specialties = await doctorModel.distinct("specialty");
+    res.json(specialties);
+  } catch (e) {
+    res.status(500).json({ message: e.message });
+  }
+};

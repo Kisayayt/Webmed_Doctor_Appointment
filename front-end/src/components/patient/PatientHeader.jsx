@@ -70,8 +70,7 @@ function PatientHeader() {
             </Link>
             <Link
               href="#"
-              onClick={(e) => e.preventDefault()}
-              target="_blank"
+              onClick={() => navigate("/doctor-list")}
               underline="none"
               color="black"
               rel="noopener noreferrer"

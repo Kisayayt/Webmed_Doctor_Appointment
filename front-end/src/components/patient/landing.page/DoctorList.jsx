@@ -124,6 +124,7 @@ function DoctorList() {
             textTransform: "none",
           }}
           variant="contained"
+          onClick={() => navigate("/doctor-list")}
         >
           More
         </Button>

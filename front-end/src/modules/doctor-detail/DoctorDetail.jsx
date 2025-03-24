@@ -212,7 +212,7 @@ function DoctorDetail() {
                 ))}
               </Box>
 
-              <Box mt={3}>
+              <Box mt={3} display="flex" alignContent={"center"}>
                 <Button
                   variant="contained"
                   color="primary"
@@ -222,10 +222,24 @@ function DoctorDetail() {
                     textTransform: "none",
                     bgcolor: "#5F6FFF",
                     padding: "10px 20px",
+                    marginRight: "10px",
                   }}
                   disabled={!selectedTime}
                 >
                   Book an appointment
+                </Button>
+                <Button
+                  variant="outlined"
+                  color="primary"
+                  sx={{
+                    borderRadius: "20px",
+                    textTransform: "none",
+                    padding: "10px 20px",
+                    width: "100px",
+                  }}
+                  onClick={() => navigate(-1)}
+                >
+                  Back
                 </Button>
               </Box>
             </Box>

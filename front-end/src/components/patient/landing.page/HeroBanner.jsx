@@ -9,7 +9,7 @@ function HeroBanner() {
     try {
       let token = localStorage.getItem("token");
       if (token) {
-        navigate("/book-appointment");
+        navigate("/doctor-list");
       } else {
         navigate("/login");
       }

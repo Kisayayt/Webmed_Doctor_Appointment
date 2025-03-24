@@ -60,36 +60,44 @@ export const Login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    const user = await patientModel.findOne({ email });
-    // console.log(user);
+    // Kiểm tra email trong bảng Patients trước
+    let user = await patientModel.findOne({ email });
+    let role = "patient";
+
+    // Nếu không tìm thấy trong bảng Patients, kiểm tra trong bảng Doctors
     if (!user) {
-      return res.status(400).json({ message: "email not found" });
+      user = await doctorModel.findOne({ email });
+      role = "doctor";
     }
 
+    // Nếu không tìm thấy user trong cả hai bảng
+    if (!user) {
+      return res.status(400).json({ message: "Email not found" });
+    }
+
+    // Kiểm tra mật khẩu
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(400).json({ message: "Password is incorrect" });
     }
-    console.log(process.env.JWT_SECRET);
 
+    // Tạo JWT token
     const token = jwt.sign(
       {
         id: user._id,
-        role: user.role,
+        role,
         name: user.name,
         email: user.email,
         avatar: user.avatar,
       },
       process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
+      { expiresIn: "1h" }
     );
-    console.log(token);
 
     res.json({
       message: "Login successful",
       token,
+      role, // Trả về role để frontend biết user này là bác sĩ hay bệnh nhân
     });
   } catch (e) {
     res.status(500).json({ message: e.message });

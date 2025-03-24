@@ -52,9 +52,16 @@ function Login() {
       const res = await axios.post("http://localhost:9999/auth/login", data);
 
       localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role); // Lưu role vào localStorage
 
       const decoded = jwtDecode(res.data.token);
-      navigate(`/home`);
+
+      // Điều hướng dựa trên role
+      if (res.data.role === "doctor") {
+        navigate("/doctor/dashboard");
+      } else {
+        navigate("/home"); // Mặc định cho bệnh nhân
+      }
     } catch {
       setOpen(true);
       setError("Username or password is incorrect");
