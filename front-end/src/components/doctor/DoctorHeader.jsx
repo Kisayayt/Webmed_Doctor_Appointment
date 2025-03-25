@@ -1,7 +1,14 @@
 import { Box, Button } from "@mui/material";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function DoctorHeader() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token"); // Xóa token khi logout
+    localStorage.removeItem("role"); // Xóa role khi logout
+    navigate("/home"); // Chuyển hướng về trang login
+  };
   return (
     <div>
       <Box
@@ -34,6 +41,7 @@ function DoctorHeader() {
               width: "130px",
             }}
             variant="contained"
+            onClick={handleLogout}
           >
             Logout
           </Button>

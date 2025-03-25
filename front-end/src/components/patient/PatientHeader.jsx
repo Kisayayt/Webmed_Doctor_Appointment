@@ -33,6 +33,7 @@ function PatientHeader() {
 
   const handleLogout = () => {
     localStorage.removeItem("token"); // Xóa token khi logout
+    localStorage.removeItem("role"); // Xóa role khi logout
     navigate("/home"); // Chuyển hướng về trang login
   };
   const isLoggedIn = !!localStorage.getItem("token");

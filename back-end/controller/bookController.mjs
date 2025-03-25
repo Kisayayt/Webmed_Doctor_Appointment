@@ -45,3 +45,15 @@ export const getAppointment = async (req, res) => {
     res.status(500).json({ message: e.message });
   }
 };
+
+export const getAppointmentsForUser = async (req, res) => {
+  try {
+    const userId = req.user.id; // Lấy ID của user từ token
+    const appointments = await appointmentModel.find({ userId });
+
+    res.json(appointments);
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

@@ -1,15 +1,23 @@
 import React from "react";
+import { Box } from "@mui/material";
 import DoctorHeader from "../../components/doctor/DoctorHeader";
+
 import { Outlet } from "react-router-dom";
-import DoctorFooter from "../../components/doctor/DoctorFooter";
+import SidebarForDoctor from "../../components/doctor/sidebar-doctor/SidebarForDoctor";
 
 function DoctorLayout() {
   return (
-    <div>
-      <DoctorHeader />
-      <Outlet></Outlet>
-      <DoctorFooter />
-    </div>
+    <Box sx={{ display: "flex" }}>
+      {/* Sidebar */}
+      <SidebarForDoctor />
+
+      {/* Main content */}
+      <Box component="main" sx={{ flexGrow: 1 }}>
+        <DoctorHeader />
+
+        <Outlet />
+      </Box>
+    </Box>
   );
 }
 

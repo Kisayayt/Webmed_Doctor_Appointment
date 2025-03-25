@@ -18,6 +18,8 @@ import DoctorListFromUser from "./modules/doctor-list/DoctorListFromUser";
 import { Navigate } from "react-router-dom";
 import DoctorLayout from "./layout/doctor/DoctorLayout";
 import DoctorDashboard from "./modules/doctor-dashboard/DoctorDashboard";
+import DoctorAvailableSlots from "./modules/doctor-appointments/DoctorAvailableSlots";
+import DoctorAppointments from "./modules/doctor-appointments/DoctorAppointments";
 
 function App() {
   const PrivateRoute = ({ children }) => {
@@ -74,6 +76,24 @@ function App() {
               element={
                 <DoctorRoute>
                   <DoctorDashboard />
+                </DoctorRoute>
+              }
+            />
+
+            <Route
+              path="/doctor/create-appointment"
+              element={
+                <DoctorRoute>
+                  <DoctorAvailableSlots />
+                </DoctorRoute>
+              }
+            />
+
+            <Route
+              path="/doctor/appointments"
+              element={
+                <DoctorRoute>
+                  <DoctorAppointments />
                 </DoctorRoute>
               }
             />
